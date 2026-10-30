@@ -1,0 +1,43 @@
+$bog_rsdemo $mol_page
+	title @ \Задачи на Rust
+	tools /
+		<= Alive $mol_view
+			sub /
+				<= alive_label \
+	body /
+		<= Draft_bar $mol_bar
+			sub /
+				<= Draft $mol_string
+					hint @ \Новая задача
+					value? <=> draft? \
+					submit? <=> add? null
+				<= Add $mol_button_minor
+					title @ \Добавить
+					click? <=> add? null
+		<= Summary $mol_paragraph
+			title <= summary \
+		<= Board $mol_section
+			title @ \В работе
+			content <= board /
+		<= Shelf $mol_section
+			title @ \Архив
+			content <= shelf /
+	Task* $mol_view
+		sub /
+			<= Done* $mol_check_box
+				title <= task_title* \
+				checked? <=> task_done*? false
+			<= Shelve* $mol_button_minor
+				title @ \В архив
+				click? <=> shelve*? null
+			<= Remove* $mol_button_minor
+				title @ \Удалить
+				click? <=> remove*? null
+	Archived* $mol_view
+		sub /
+			<= Archived_done* $mol_check_box
+				title <= task_title* \
+				checked? <=> task_done*? false
+			<= Archived_remove* $mol_button_minor
+				title @ \Удалить
+				click? <=> remove*? null
