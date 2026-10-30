@@ -18,7 +18,7 @@ bog/rsdemo/-/native
 sleep 100000 | MAM_BUILD_SERVER_PORT=9091 node mol/build/-/node.js
 ```
 
-Страница открывается по адресу `http://localhost:9091/bog/rsdemo/-/test.html`.
+Страница открывается по адресу `http://localhost:9091/bog/rsdemo/-/test.html`. Живая версия: https://b-on-g.github.io/rsdemo/. CI собирает её сборщиком из ветки `rust` форка.
 
 ## Владение как в моле
 
