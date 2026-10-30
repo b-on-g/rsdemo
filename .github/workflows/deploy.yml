@@ -1,0 +1,45 @@
+name: $bog_rsdemo
+
+permissions: write-all
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - run: git clone --depth=1 https://github.com/hyoo-ru/mam.git .
+
+    - run: git clone --depth=1 --branch rust https://github.com/Dev-cmyser/mam_mol.git mol
+
+    - uses: actions/checkout@v4
+      with:
+        path: bog/rsdemo
+
+    - run: rustup target add wasm32-unknown-unknown
+
+    - run: npm install --omit=optional
+
+    - run: npx mam mol/build
+
+    - run: node mol/build/-/node.js bog/rsdemo
+
+    - run: rm -rf bog/rsdemo/-/rust bog/rsdemo/-/native
+
+    - uses: hyoo-ru/gh-deploy@v4.4.1
+      with:
+        folder: 'bog/rsdemo/-'
+
+    - name: URL
+      run: |
+        echo "- demo: https://b-on-g.github.io/rsdemo/" >> "$GITHUB_STEP_SUMMARY"
