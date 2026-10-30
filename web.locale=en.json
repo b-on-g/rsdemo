@@ -1,0 +1,10 @@
+{
+	"$bog_rsdemo_Add_title": "Добавить",
+	"$bog_rsdemo_Archived_remove_title": "Удалить",
+	"$bog_rsdemo_Board_title": "В работе",
+	"$bog_rsdemo_Draft_hint": "Новая задача",
+	"$bog_rsdemo_Remove_title": "Удалить",
+	"$bog_rsdemo_Shelf_title": "Архив",
+	"$bog_rsdemo_Shelve_title": "В архив",
+	"$bog_rsdemo_title": "Задачи на Rust"
+}

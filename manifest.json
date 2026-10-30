@@ -1,0 +1,10 @@
+{
+	"name": "bog_rsdemo",
+	"short_name": "bog_rsdemo",
+	"description": "",
+	"id": "bog_rsdemo",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}
