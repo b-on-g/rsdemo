@@ -1,4 +1,4 @@
-use crate::mol::wire::{Mem, MemKey, Obj};
+use crate::mol::wire::{solid, Mem, MemKey, Obj};
 use crate::bog::rsdemo::store::Store;
 use crate::bog::rsdemo::task::Task;
 
@@ -16,11 +16,17 @@ pub struct App {
 
 impl App {
 	pub fn tasks(self, next: Option<Vec<u32>>) -> Vec<u32> {
-		self.tasks.call(next, |next| next.unwrap_or_default())
+		self.tasks.call(next, |next| {
+			solid();
+			next.unwrap_or_default()
+		})
 	}
 
 	pub fn archive(self, next: Option<Vec<u32>>) -> Vec<u32> {
-		self.archive.call(next, |next| next.unwrap_or_default())
+		self.archive.call(next, |next| {
+			solid();
+			next.unwrap_or_default()
+		})
 	}
 
 	pub fn task(self, id: u32) -> Obj<Task> {

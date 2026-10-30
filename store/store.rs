@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::rc::Rc;
-use crate::mol::wire::{Mem, Value};
+use crate::mol::wire::{solid, Mem, Value};
 
 #[derive(Clone, PartialEq, Default)]
 pub struct Record {
@@ -18,7 +18,17 @@ pub struct Store {
 
 impl Store {
 	pub fn records(self, next: Option<Rc<HashMap<u32, Record>>>) -> Rc<HashMap<u32, Record>> {
-		self.records.call(next, |next| next.unwrap_or_default())
+		self.records.call(next, |next| {
+			solid();
+			next.unwrap_or_default()
+		})
+	}
+
+	pub fn seq(self, next: Option<u32>) -> u32 {
+		self.seq.call(next, |next| {
+			solid();
+			next.unwrap_or(0)
+		})
 	}
 
 	pub fn record(self, id: u32) -> Record {
@@ -32,8 +42,8 @@ impl Store {
 	}
 
 	pub fn insert(self, title: &str) -> u32 {
-		let id = self.seq.call(None, |next| next.unwrap_or(0)) + 1;
-		self.seq.call(Some(id), |next| next.unwrap_or(0));
+		let id = self.seq(None) + 1;
+		self.seq(Some(id));
 		self.patch(id, |record| record.title = title.into());
 		id
 	}

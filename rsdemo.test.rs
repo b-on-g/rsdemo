@@ -59,6 +59,21 @@ fn unobserved_task_recreated_from_store() {
 }
 
 #[test]
+fn state_survives_closed_views() {
+	let app = Root::<App>::default();
+	let views = views(**app);
+	let milk = app.add("Milk");
+	app.add("Bread");
+	app.shelve(milk);
+	app.task(milk).done(Some(true));
+	sync();
+	drop(views);
+	sync();
+	assert_eq!(app.tasks(None).len(), 1);
+	assert_eq!(app.shelf(), vec!["[x] Milk"]);
+}
+
+#[test]
 fn removed_task_is_freed() {
 	let app = Root::<App>::default();
 	let _views = views(**app);
